@@ -1,0 +1,914 @@
+<html>
+<head>
+	<!-- jQuery/AJAX -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js" type="text/javascript"></script>
+	
+	<!-- KnockoutJS -->
+	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-3.3.0.js" type="text/javascript"></script>
+	<!-- Styles -->
+	<style>
+		<!-- main tags -->
+		html {
+			font-family: sans-serif;
+			font-size: 10px;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			-webkit-text-size-adjust: 100%;
+			  -ms-text-size-adjust: 100%;
+		}
+		body {
+			margin: 0;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size: 14px;
+			line-height: 1.42857143;
+			color: #333;
+			background-color: #fff;
+		}
+		p {
+			text-align: center;
+			margin: 0 0 10px;
+		}
+		nav {
+			display: block;
+		}
+		a {
+			background-color: transparent;
+		}
+		a:active,
+		a:hover {
+			outline: 0;
+		}
+		strong {
+			font-weight: bold;
+		}
+		img {
+			border: 0;
+		}
+		hr {
+			margin-top: 20px;
+			margin-bottom: 20px;
+			border: 0;
+			border-top: 1px solid #eee;
+			height: 0;
+			 -webkit-box-sizing: content-box;
+				-moz-box-sizing: content-box;
+				 box-sizing: content-box;
+		}
+		button,
+		input,
+		optgroup,
+		select,
+		textarea {
+			  margin: 0;
+			  font: inherit;
+			  color: inherit;
+		}
+		button {
+			overflow: visible;
+		}
+		button,
+		select {
+			text-transform: none;
+		}
+		button,
+		html input[type="button"],
+		input[type="reset"],
+		input[type="submit"] {
+			-webkit-appearance: button;
+			cursor: pointer;
+		}
+		label {
+			padding: 10px;
+		}
+		input {
+			line-height: normal;
+		}
+		input[type="checkbox"]{
+			  -webkit-box-sizing: border-box;
+				 -moz-box-sizing: border-box;
+					  box-sizing: border-box;
+			  padding: 0;
+		}
+		table {
+			border-spacing: 0;
+			border-collapse: collapse;
+		}
+		td,
+		th {
+			padding: 0;
+		}
+		* {
+		  -webkit-box-sizing: border-box;
+			 -moz-box-sizing: border-box;
+				  box-sizing: border-box;
+		}
+		*:before,
+		*:after {
+		  -webkit-box-sizing: border-box;
+			 -moz-box-sizing: border-box;
+				  box-sizing: border-box;
+		}
+		a {
+			color: #337ab7;
+			text-decoration: none;
+		}
+		a:hover,
+		a:focus {
+			color: #23527c;
+			text-decoration: underline;
+		}
+		a:focus {
+			outline: thin dotted;
+			outline: 5px auto -webkit-focus-ring-color;
+			outline-offset: -2px;
+		}
+		[role="button"] {
+			cursor: pointer;
+		}
+		.container {
+			padding-right: 15px;
+			padding-left: 15px;
+			margin-right: auto;
+			margin-left: auto;
+		}
+		@media (min-width: 768px) {
+			.container {
+				width: 750px;
+			}
+		}
+		@media (min-width: 992px) {
+			.container {
+				width: 970px;
+			}
+		}
+		@media (min-width: 1200px) {
+			.container {
+				width: 1170px;
+			}
+		}
+		table {
+			background-color: transparent;
+		}
+		th {
+			text-align: left;
+		}
+		.table {
+			width: 100%;
+			max-width: 100%;
+			margin-bottom: 20px;
+		}
+		.table > thead > tr > th,
+		.table > thead > tr > td,
+		.table > tbody > tr > td{
+			padding: 8px;
+			line-height: 1.42857143;
+			vertical-align: top;
+			border-top: 1px solid #ddd;
+		}
+		.table > thead > tr > th {
+			vertical-align: bottom;
+			border-bottom: 2px solid #ddd;
+		}
+		.table > tbody + tbody {
+			border-top: 2px solid #dddddd;
+		}
+		.table-condensed > thead > tr > th,
+		.table-condensed > tbody > tr > th,
+		.table-condensed > thead > tr > td,
+		.table-condensed > tbody > tr > td {
+			padding: 5px;
+		}
+		.table-hover > tbody > tr:hover {
+			background-color: #f5f5f5;
+		}
+
+		input[type="checkbox"]:focus {
+			outline: thin dotted;
+			outline: 5px auto -webkit-focus-ring-color;
+			outline-offset: -2px;
+		}
+		.form-control {
+			display: block;
+			width: 100%;
+			height: 34px;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			color: #555;
+			background-color: #fff;
+			background-image: none;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+				  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+			-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+			   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+				  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+		}
+		.form-control:focus {
+			border-color: #66afe9;
+			outline: 0;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+				  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+		}
+		.form-control::-moz-placeholder {
+			color: #999;
+			opacity: 1;
+		}
+		.form-control:-ms-input-placeholder {
+			color: #999;
+		}
+		.form-control::-webkit-input-placeholder {
+			color: #999;
+		}
+		.caret {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			margin-left: 2px;
+			vertical-align: middle;
+			border-top: 4px dashed;
+			border-top: 4px solid \9;
+			border-right: 4px solid transparent;
+			border-left: 4px solid transparent;
+		}
+		.dropdown {
+			position: relative;
+		}
+		.dropdown-toggle:focus {
+			outline: 0;
+		}
+		.dropdown-menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			z-index: 1000;
+			display: none;
+			float: left;
+			min-width: 160px;
+			padding: 5px 0;
+			margin: 2px 0 0;
+			font-size: 14px;
+			text-align: left;
+			list-style: none;
+			background-color: #fff;
+			-webkit-background-clip: padding-box;
+				  background-clip: padding-box;
+			border: 1px solid #ccc;
+			border: 1px solid rgba(0, 0, 0, .15);
+			border-radius: 4px;
+			-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+				  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+		}
+		.dropdown-menu > li > a {
+			display: block;
+			padding: 3px 20px;
+			clear: both;
+			font-weight: normal;
+			line-height: 1.42857143;
+			color: #333;
+			white-space: nowrap;
+		}
+		.dropdown-menu > li > a:hover,
+		.dropdown-menu > li > a:focus {
+			color: #262626;
+			text-decoration: none;
+			background-color: #f5f5f5;
+		}
+		.open > .dropdown-menu {
+			display: block;
+		}
+		.open > a {
+			outline: 0;
+		}
+		.nav {
+			padding-left: 0;
+			margin-bottom: 0;
+			list-style: none;
+		}
+		.nav > li {
+			position: relative;
+			display: block;
+		}
+		.nav > li > a {
+			position: relative;
+			display: block;
+			padding: 10px 15px;
+		}
+		.nav > li > a:hover,
+		.nav > li > a:focus {
+			text-decoration: none;
+			background-color: #eee;
+		}
+		.navbar {
+			position: relative;
+			min-height: 50px;
+			margin-bottom: 20px;
+			border: 1px solid transparent;
+		}
+		@media (min-width: 768px) {
+			.navbar {
+				border-radius: 4px;
+			}
+		}
+		@media (min-width: 768px) {
+			.navbar-header {
+				float: left;
+			}
+		}
+		.container > .navbar-header	{
+			margin-right: -15px;
+			margin-left: -15px;
+		}
+		.navbar-brand {
+			float: left;
+			height: 50px;
+			padding: 15px 15px;
+			font-size: 18px;
+			line-height: 20px;
+		}
+		.navbar-brand:hover,
+		.navbar-brand:focus {
+			text-decoration: none;
+		}
+		.navbar-nav {
+			margin: 7.5px -15px;
+		}
+		.navbar-nav > li > a {
+			padding-top: 10px;
+			padding-bottom: 10px;
+			line-height: 20px;
+		}
+		@media (min-width: 768px) {
+			.navbar-nav {
+				float: left;
+				margin: 0;
+			}
+			.navbar-nav > li {
+				float: left;
+			}
+			.navbar-nav > li > a {
+				padding-top: 15px;
+				padding-bottom: 15px;
+			}
+		}
+		.navbar-right {
+			float: right !important;
+			margin-right: -15px;
+		}
+		.navbar-default {
+			background-color: #f8f8f8;
+			border-color: #e7e7e7;
+			background-image: -webkit-linear-gradient(top, #fff 0%, #f8f8f8 100%);
+			background-image:      -o-linear-gradient(top, #fff 0%, #f8f8f8 100%);
+			background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f8f8f8));
+			background-image:         linear-gradient(to bottom, #fff 0%, #f8f8f8 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff8f8f8', GradientType=0);
+			filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+			background-repeat: repeat-x;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075);
+				  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075);
+		}
+		.navbar-brand,
+		.navbar-nav > li > a {
+			text-shadow: 0 1px 0 rgba(255, 255, 255, .25);
+		}
+		.navbar-default .navbar-brand {
+			color: #777777;
+		}
+		.navbar-default .navbar-brand:hover,
+		.navbar-default .navbar-brand:focus {
+			color: #5e5e5e;
+			background-color: transparent;
+		}
+		.navbar-default .navbar-nav > li > a {
+			color: #777;
+		}
+		.navbar-default .navbar-nav > li > a:hover,
+		.navbar-default .navbar-nav > li > a:focus {
+			color: #333;
+			background-color: transparent;
+		}
+		.navbar-default .navbar-nav > .open > a,
+		.navbar-default .navbar-nav > .open > a:hover,
+		.navbar-default .navbar-nav > .open > a:focus {
+			color: #555555;
+			background-color: #e7e7e7;
+		}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <!-- Navbar -->
+    <div class="navbar-header">
+      <a class="navbar-brand" id="lnk_List" href="#">Santa's List</a>
+    </div>
+      <ul class="nav navbar-nav navbar-right">
+		<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" role="button">Kids<span class="caret"></span></a>
+			<ul class="dropdown-menu" data-bind="foreach: Children">
+				<li><a data-bind="text: name"></a>
+				</li>
+			</ul>
+		</li>
+		<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nice<span class="caret"></span></a>
+			<ul class="dropdown-menu" data-bind="foreach: Children">
+				<li data-bind="ifnot: naughty">
+					<a data-bind="text: name">None</a>
+				</li>
+			</ul>
+		</li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Naughty<span class="caret"></span></a>
+          <ul class="dropdown-menu" data-bind="foreach: Children">
+            <li data-bind="if: naughty"><a data-bind="text: name">None</a>
+			</li>
+          </ul>
+        </li>
+      </ul>
+  </div>
+</nav>
+	<div class="container body-content">
+		<div style="text-align: center">
+			<p>You better watch out, you better not cry, better not pout.  Santa coming to town and he is making a list, check it twice.  Finding  who has being naughty or nice!</p>
+		</div>
+		<div id="The list">
+			<h2>The List</h2>			
+			<div id="Required" hidden>
+				<strong style="color: red">Please enter a name and a gift.</strong>
+			</div>
+			<p style="text-align: left">
+				<label><input type="radio" name="view" value="all" data-bind="checked: trueToView"/>All</label>
+				<label><input type="radio" name="view" value="nice" data-bind="checked: trueToView"/>Nice</label>
+				<label><input type="radio" name="view" value="naughty" data-bind="checked: trueToView"/>Naugthy</label>
+			</p>
+			<table class="table table-hover table-condensed">
+				<thead>
+					<tr>
+						<th style="text-align: center; width: 100px">Naughty?
+						<th>Name
+						<th colspan="2">Gift
+					</tr>
+					<tr>
+						<form data-bind="submit: addChild">
+						<td></td>
+						<td><input class="form-control" type="text" data-bind="value: newName" placeholder="Enter name"/></td>
+						<td><input class="form-control" type="text" data-bind="value: newGift" placeholder="Enter gift"/></td>
+						<td><a href="#" class="btn input-group-addon" type="submit" >+</a></td>
+						</form>
+					</tr>
+				</thead>
+				<tbody data-bind="foreach: ChildrenToView, select: viewChild">
+					<tr>
+						<td style="text-align: center; width: 100px"><input type="checkbox" data-bind="checked: naughty"/></td>
+						<td data-bind="text: name"></td>
+						<td data-bind="text: gift()[0]"></td>
+						<td><a href="#" data-bind="click: $root.removeChild">x</a>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+<!-- Javascript -->
+<script type="text/javascript">
+	// a Class to represent a row (child) within the table
+	function TheChild(name, gift) {
+		var self = this;
+		self.name = name.name;
+		self.gift = ko.observableArray();
+		self.gift.push(gift.gift);
+		self.naughty = ko.observable(false);
+	}
+	
+	// View model and the intial state
+	function SantaListViewModel() {
+		var self = this;
+		self.newName = ko.observable("");
+		self.newGift = ko.observable("");
+		self.trueToView = ko.observable("all");
+		self.Children = ko.observableArray([
+			new TheChild({name: "Hank"}, {gift: "2016 Chevy Corvette Z06"}),
+			new TheChild({name: "Patty"}, {gift: "2014 Land Rover Evoque"}),
+			new TheChild({name: "Jim"}, {gift: "Intel LGA 1151 i7-6700K"})
+		]);
+		
+		// Operations
+		self.addChild = function(){
+			if (this.newName() == "" || this.newGift == ""){
+				$("#Required").removeAttr("hidden");
+			} else {
+				$("#Required").attr("hidden", "");
+				self.Children.unshift(new TheChild({name: self.newName()},{gift: self.newGift()}));
+				// if the view is naughty set naughty to true.
+				if (self.trueToView() == "naughty"){
+					self.Children()[0].naughty(true);
+				}
+				self.newName("");
+				self.newGift("");
+			}
+		}
+		
+		self.removeChild = function(child){
+			self.Children.remove(child);
+		}
+		
+		// behaviors
+		self.ChildrenToView = ko.pureComputed(function() {
+			// Represents a filtered list of planets
+			// i.e., only those matching the "typeToShow" condition
+			var desiredType = this.trueToView();
+			if (desiredType == "all") return self.Children();
+			return ko.utils.arrayFilter(self.Children(), function(child){
+				if (desiredType == "nice") return !child.naughty();
+				return child.naughty();
+			})
+		}, this);
+		
+		// #Rrequired default
+		visibility: "hidden";
+	}
+	ko.applyBindings(new SantaListViewModel());
+	//-- KnockoutJS endColorstr
+	
+	/* ========================================================================
+	 * Bootstrap: collapse.js v3.3.5
+	 * http://getbootstrap.com/javascript/#collapse
+	 * ========================================================================
+	 * Copyright 2011-2015 Twitter, Inc.
+	 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+	 * ======================================================================== */
+
++function ($) {
+  'use strict';
+
+  // COLLAPSE PUBLIC CLASS DEFINITION
+  // ================================
+
+  var Collapse = function (element, options) {
+    this.$element      = $(element)
+    this.options       = $.extend({}, Collapse.DEFAULTS, options)
+    this.$trigger      = $('[data-toggle="collapse"][href="#' + element.id + '"],' +
+                           '[data-toggle="collapse"][data-target="#' + element.id + '"]')
+    this.transitioning = null
+
+    if (this.options.parent) {
+      this.$parent = this.getParent()
+    } else {
+      this.addAriaAndCollapsedClass(this.$element, this.$trigger)
+    }
+
+    if (this.options.toggle) this.toggle()
+  }
+
+  Collapse.VERSION  = '3.3.5'
+
+  Collapse.TRANSITION_DURATION = 350
+
+  Collapse.DEFAULTS = {
+    toggle: true
+  }
+
+  Collapse.prototype.dimension = function () {
+    var hasWidth = this.$element.hasClass('width')
+    return hasWidth ? 'width' : 'height'
+  }
+
+  Collapse.prototype.show = function () {
+    if (this.transitioning || this.$element.hasClass('in')) return
+
+    var activesData
+    var actives = this.$parent && this.$parent.children('.panel').children('.in, .collapsing')
+
+    if (actives && actives.length) {
+      activesData = actives.data('bs.collapse')
+      if (activesData && activesData.transitioning) return
+    }
+
+    var startEvent = $.Event('show.bs.collapse')
+    this.$element.trigger(startEvent)
+    if (startEvent.isDefaultPrevented()) return
+
+    if (actives && actives.length) {
+      Plugin.call(actives, 'hide')
+      activesData || actives.data('bs.collapse', null)
+    }
+
+    var dimension = this.dimension()
+
+    this.$element
+      .removeClass('collapse')
+      .addClass('collapsing')[dimension](0)
+      .attr('aria-expanded', true)
+
+    this.$trigger
+      .removeClass('collapsed')
+      .attr('aria-expanded', true)
+
+    this.transitioning = 1
+
+    var complete = function () {
+      this.$element
+        .removeClass('collapsing')
+        .addClass('collapse in')[dimension]('')
+      this.transitioning = 0
+      this.$element
+        .trigger('shown.bs.collapse')
+    }
+
+    if (!$.support.transition) return complete.call(this)
+
+    var scrollSize = $.camelCase(['scroll', dimension].join('-'))
+
+    this.$element
+      .one('bsTransitionEnd', $.proxy(complete, this))
+      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
+  }
+
+  Collapse.prototype.hide = function () {
+    if (this.transitioning || !this.$element.hasClass('in')) return
+
+    var startEvent = $.Event('hide.bs.collapse')
+    this.$element.trigger(startEvent)
+    if (startEvent.isDefaultPrevented()) return
+
+    var dimension = this.dimension()
+
+    this.$element[dimension](this.$element[dimension]())[0].offsetHeight
+
+    this.$element
+      .addClass('collapsing')
+      .removeClass('collapse in')
+      .attr('aria-expanded', false)
+
+    this.$trigger
+      .addClass('collapsed')
+      .attr('aria-expanded', false)
+
+    this.transitioning = 1
+
+    var complete = function () {
+      this.transitioning = 0
+      this.$element
+        .removeClass('collapsing')
+        .addClass('collapse')
+        .trigger('hidden.bs.collapse')
+    }
+
+    if (!$.support.transition) return complete.call(this)
+
+    this.$element
+      [dimension](0)
+      .one('bsTransitionEnd', $.proxy(complete, this))
+      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)
+  }
+
+  Collapse.prototype.toggle = function () {
+    this[this.$element.hasClass('in') ? 'hide' : 'show']()
+  }
+
+  Collapse.prototype.getParent = function () {
+    return $(this.options.parent)
+      .find('[data-toggle="collapse"][data-parent="' + this.options.parent + '"]')
+      .each($.proxy(function (i, element) {
+        var $element = $(element)
+        this.addAriaAndCollapsedClass(getTargetFromTrigger($element), $element)
+      }, this))
+      .end()
+  }
+
+  Collapse.prototype.addAriaAndCollapsedClass = function ($element, $trigger) {
+    var isOpen = $element.hasClass('in')
+
+    $element.attr('aria-expanded', isOpen)
+    $trigger
+      .toggleClass('collapsed', !isOpen)
+      .attr('aria-expanded', isOpen)
+  }
+
+  function getTargetFromTrigger($trigger) {
+    var href
+    var target = $trigger.attr('data-target')
+      || (href = $trigger.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '') // strip for ie7
+
+    return $(target)
+  }
+
+
+  // COLLAPSE PLUGIN DEFINITION
+  // ==========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this   = $(this)
+      var data    = $this.data('bs.collapse')
+      var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
+
+      if (!data && options.toggle && /show|hide/.test(option)) options.toggle = false
+      if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  var old = $.fn.collapse
+
+  $.fn.collapse             = Plugin
+  $.fn.collapse.Constructor = Collapse
+
+
+  // COLLAPSE NO CONFLICT
+  // ====================
+
+  $.fn.collapse.noConflict = function () {
+    $.fn.collapse = old
+    return this
+  }
+
+
+  // COLLAPSE DATA-API
+  // =================
+
+  $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
+    var $this   = $(this)
+
+    if (!$this.attr('data-target')) e.preventDefault()
+
+    var $target = getTargetFromTrigger($this)
+    var data    = $target.data('bs.collapse')
+    var option  = data ? 'toggle' : $this.data()
+
+    Plugin.call($target, option)
+  })
+
+}(jQuery);
+
+/* ========================================================================
+ * Bootstrap: dropdown.js v3.3.5
+ * http://getbootstrap.com/javascript/#dropdowns
+ * ========================================================================
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ * ======================================================================== */
+
+
++function ($) {
+  'use strict';
+
+  // DROPDOWN CLASS DEFINITION
+  // =========================
+
+  var backdrop = '.dropdown-backdrop'
+  var toggle   = '[data-toggle="dropdown"]'
+  var Dropdown = function (element) {
+    $(element).on('click.bs.dropdown', this.toggle)
+  }
+
+  Dropdown.VERSION = '3.3.5'
+
+  function getParent($this) {
+    var selector = $this.attr('data-target')
+
+    if (!selector) {
+      selector = $this.attr('href')
+      selector = selector && /#[A-Za-z]/.test(selector) && selector.replace(/.*(?=#[^\s]*$)/, '') // strip for ie7
+    }
+
+    var $parent = selector && $(selector)
+
+    return $parent && $parent.length ? $parent : $this.parent()
+  }
+
+  function clearMenus(e) {
+    if (e && e.which === 3) return
+    $(backdrop).remove()
+    $(toggle).each(function () {
+      var $this         = $(this)
+      var $parent       = getParent($this)
+      var relatedTarget = { relatedTarget: this }
+
+      if (!$parent.hasClass('open')) return
+
+      if (e && e.type == 'click' && /input|textarea/i.test(e.target.tagName) && $.contains($parent[0], e.target)) return
+
+      $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
+
+      if (e.isDefaultPrevented()) return
+
+      $this.attr('aria-expanded', 'false')
+      $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
+    })
+  }
+
+  Dropdown.prototype.toggle = function (e) {
+    var $this = $(this)
+
+    if ($this.is('.disabled, :disabled')) return
+
+    var $parent  = getParent($this)
+    var isActive = $parent.hasClass('open')
+
+    clearMenus()
+
+    if (!isActive) {
+      if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
+        // if mobile we use a backdrop because click events don't delegate
+        $(document.createElement('div'))
+          .addClass('dropdown-backdrop')
+          .insertAfter($(this))
+          .on('click', clearMenus)
+      }
+
+      var relatedTarget = { relatedTarget: this }
+      $parent.trigger(e = $.Event('show.bs.dropdown', relatedTarget))
+
+      if (e.isDefaultPrevented()) return
+
+      $this
+        .trigger('focus')
+        .attr('aria-expanded', 'true')
+
+      $parent
+        .toggleClass('open')
+        .trigger('shown.bs.dropdown', relatedTarget)
+    }
+
+    return false
+  }
+
+  Dropdown.prototype.keydown = function (e) {
+    if (!/(38|40|27|32)/.test(e.which) || /input|textarea/i.test(e.target.tagName)) return
+
+    var $this = $(this)
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    if ($this.is('.disabled, :disabled')) return
+
+    var $parent  = getParent($this)
+    var isActive = $parent.hasClass('open')
+
+    if (!isActive && e.which != 27 || isActive && e.which == 27) {
+      if (e.which == 27) $parent.find(toggle).trigger('focus')
+      return $this.trigger('click')
+    }
+
+    var desc = ' li:not(.disabled):visible a'
+    var $items = $parent.find('.dropdown-menu' + desc)
+
+    if (!$items.length) return
+
+    var index = $items.index(e.target)
+
+    if (e.which == 38 && index > 0)                 index--         // up
+    if (e.which == 40 && index < $items.length - 1) index++         // down
+    if (!~index)                                    index = 0
+
+    $items.eq(index).trigger('focus')
+  }
+
+
+  // DROPDOWN PLUGIN DEFINITION
+  // ==========================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this = $(this)
+      var data  = $this.data('bs.dropdown')
+
+      if (!data) $this.data('bs.dropdown', (data = new Dropdown(this)))
+      if (typeof option == 'string') data[option].call($this)
+    })
+  }
+
+  var old = $.fn.dropdown
+
+  $.fn.dropdown             = Plugin
+  $.fn.dropdown.Constructor = Dropdown
+
+
+  // DROPDOWN NO CONFLICT
+  // ====================
+
+  $.fn.dropdown.noConflict = function () {
+    $.fn.dropdown = old
+    return this
+  }
+
+
+  // APPLY TO STANDARD DROPDOWN ELEMENTS
+  // ===================================
+
+  $(document)
+    .on('click.bs.dropdown.data-api', clearMenus)
+    .on('click.bs.dropdown.data-api', '.dropdown form', function (e) { e.stopPropagation() })
+    .on('click.bs.dropdown.data-api', toggle, Dropdown.prototype.toggle)
+    .on('keydown.bs.dropdown.data-api', toggle, Dropdown.prototype.keydown)
+    .on('keydown.bs.dropdown.data-api', '.dropdown-menu', Dropdown.prototype.keydown)
+
+}(jQuery);
+
+</script>
+</html>
